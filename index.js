@@ -18,7 +18,7 @@ app.use(cookieParser());
 // MongoDB URI
 const MONGODB_URI = 'mongodb://127.0.0.1:27017/uVideo-db';
 // Connect to MongoDB
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGODB_URI)
   .then(() => {
     console.log('Connected to MongoDB', MONGODB_URI);
   })

@@ -1,5 +1,5 @@
 import Video from "../models/Video.js"
-// import Video from "../models/Video.js"
+import User from "../models/User.js"
 
 export const addVideo = async (req, res) => {
   try {
@@ -75,12 +75,34 @@ export const trend = async (req, res) => {
 
 export const random = async (req, res) => {
   try {
-    const videos = await Video.aggregate({ $sample: {size: 40}} );
-    return res.status(200).json({ success: true, message : "Video Found Successfully!!", data: videos });
+    // Fetch all documents from the collection
+    const allVideos = await Video.find();
+    
+    // Check if there are any documents
+    if (allVideos.length === 0) {
+      return res.status(404).json({ success: false, message: "No videos found", data: null });
+    }
+    
+    // Select a random index
+    const randomIndex = Math.floor(Math.random() * allVideos.length);
+    
+    // Get the randomly selected video
+    const randomVideo = allVideos[randomIndex];
+    
+    return res.status(200).json({ success: true, message: "Video found successfully", data: randomVideo });
   } catch (error) {
-    return res.status(500).json({ success: false, message: "Something Went wrong!!", error: error.message});
+    return res.status(500).json({ success: false, message: "Something went wrong", error: error.message });
   }
 };
+
+// export const random = async (req, res) => {
+//   try {
+//     const videos = await Video.aggregate({ $sample: {size: 40}} );
+//     return res.status(200).json({ success: true, message : "Video Found Successfully!!", data: videos });
+//   } catch (error) {
+//     return res.status(500).json({ success: false, message: "Something Went wrong!!", error: error.message});
+//   }
+// };
 
 export const sub = async (req, res) => {
   try {
