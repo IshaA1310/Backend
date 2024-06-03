@@ -33,12 +33,12 @@ export const getUser = async (req, res) => {
   if(req.params.id === req.user.id) {
     try {
       const userInfo = await User.findById({ _id: req.params.id});
-      return res.status(200).send({ success: true, message: "You account updated successfully!!", data: userInfo });
+      return res.status(200).send({ success: true, message: "You account details successfully!!", data: userInfo });
     } catch (error) {
-      return res.status(400).send({ success: false, message: "You can not update your account!!", data: error.message });
+      return res.status(400).send({ success: false, message: "You can not get details of others account!!", data: error.message });
     }
   } else {
-    return res.status(400).send({ success: false, message: "You can update your account only" });
+    return res.status(400).send({ success: false, message: "You can not get details of others account!!" });
   }
 };
 

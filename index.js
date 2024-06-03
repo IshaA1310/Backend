@@ -9,7 +9,7 @@ import authRoutes from "./routes/auth.js";
 
 // Create an instance of Express
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = 4000 || process.env.PORT;
 
 // Middleware to parse JSON
 app.use(express.json());

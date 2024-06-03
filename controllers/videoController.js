@@ -76,24 +76,30 @@ export const trend = async (req, res) => {
 export const random = async (req, res) => {
   try {
     // Fetch all documents from the collection
-    const allVideos = await Video.find();
+    const allVideos = await Video.find().lean();  // Using lean() to get plain JavaScript objects
+    console.log(`Total number of videos: ${allVideos.length}`);
     
     // Check if there are any documents
     if (allVideos.length === 0) {
+      console.log('No videos found');
       return res.status(404).json({ success: false, message: "No videos found", data: null });
     }
     
     // Select a random index
     const randomIndex = Math.floor(Math.random() * allVideos.length);
+    console.log(`Random index generated: ${randomIndex}`);
     
     // Get the randomly selected video
     const randomVideo = allVideos[randomIndex];
+    console.log(`Randomly selected video:`, randomVideo, `${randomVideo.length}`,'randomVideo length');
     
     return res.status(200).json({ success: true, message: "Video found successfully", data: randomVideo });
   } catch (error) {
+    console.error('Error occurred:', error);
     return res.status(500).json({ success: false, message: "Something went wrong", error: error.message });
   }
 };
+
 
 // export const random = async (req, res) => {
 //   try {

@@ -11,13 +11,13 @@ router.put("/:id", verifyToken, updateUser);
 router.delete("/:id", verifyToken, deleteUser);
 
 // get user
-router.get("/userDetail/:id", verifyToken, getUser);
+router.get("/find/:id", verifyToken, getUser);
 
 // subscribe channel
-router.put("/subscribe/:id", verifyToken, subscribeUser);
+router.put("/sub/:id", verifyToken, subscribeUser);
 
 // unsubscribe channel
-router.put("/unsubscribe/:id", verifyToken, unsubscribeUser);
+router.put("/unsub/:id", verifyToken, unsubscribeUser);
 
 // like video
 router.put("/like/:videoid", verifyToken, likeVideos);
