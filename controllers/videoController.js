@@ -76,7 +76,7 @@ export const trend = async (req, res) => {
 export const random = async (req, res) => {
   try {
     // Fetch all documents from the collection
-    const allVideos = await Video.find().lean();  // Using lean() to get plain JavaScript objects
+    const allVideos = await Video.find().lean(); // Using lean() to get plain JavaScript objects
     console.log(`Total number of videos: ${allVideos.length}`);
     
     // Check if there are any documents
@@ -85,21 +85,22 @@ export const random = async (req, res) => {
       return res.status(404).json({ success: false, message: "No videos found", data: null });
     }
     
-    // Select a random index
-    const randomIndex = Math.floor(Math.random() * allVideos.length);
-    console.log(`Random index generated: ${randomIndex}`);
+    // Shuffle the array
+    for (let i = allVideos.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [allVideos[i], allVideos[j]] = [allVideos[j], allVideos[i]];
+    }
     
-    // Get the randomly selected video
-    const randomVideo = allVideos[randomIndex];
-    console.log(`Randomly selected video:`, randomVideo, `${randomVideo.length}`,'randomVideo length');
+    // Select the first 8 videos from the shuffled array
+    const selectedVideos = allVideos.slice(0, 8);
+    console.log('Selected videos:', selectedVideos.length);
     
-    return res.status(200).json({ success: true, message: "Video found successfully", data: randomVideo });
+    return res.status(200).json({ success: true, message: "Videos found successfully", data: selectedVideos });
   } catch (error) {
     console.error('Error occurred:', error);
     return res.status(500).json({ success: false, message: "Something went wrong", error: error.message });
   }
 };
-
 
 // export const random = async (req, res) => {
 //   try {
